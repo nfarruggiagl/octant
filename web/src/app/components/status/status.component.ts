@@ -46,7 +46,7 @@ export class StatusComponent {
   private handleEvent = (message: MessageEvent) => {
     const data = JSON.parse(message.data);
     this.behavior.next(data);
-    this.messageList.push(data);
+    this.messageList.unshift(data);
   };
 
   toggleTitle(errorSpan: any) {
@@ -64,8 +64,8 @@ export class StatusComponent {
 
   TabEvent(): void {
     let timp: any;
-    this.behavior.forEach(data => {
-      timp = new Date().getTime() - +data.timeStamp;
+    this.messageList.forEach(data => {
+      timp = new Date().getTime() - +Math.floor(data.timeStamp / 1000000);
       data.timeDiff = this.calculateTime(timp);
     });
   }

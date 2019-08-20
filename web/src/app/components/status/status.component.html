@@ -14,24 +14,14 @@
           <clr-tab-content id="{{ tab.streamName }}-{{ tab.displayName }}" *clrIfActive>
             <div class="eventInfo" *ngFor="let list of messageList">
               <div class="iconsArea">
-                <i
-                  class="spinner spinner-inline spinner-pos"
-                  [hidden]="list.state != 'progressing'"
-                ></i>
                 <clr-icon
-                  [hidden]="list.state != 'success'"
-                  size="18"
-                  shape="success-standard"
-                  class="color-green"
-                ></clr-icon>
-                <clr-icon
-                  [hidden]="list.state != 'failure'"
+                  [hidden]="list.state != 'error'"
                   size="18"
                   shape="error-standard"
                   class="color-red"
                 ></clr-icon>
                 <clr-icon
-                  [hidden]="list.state != 'interrupt'"
+                  [hidden]="list.state != 'warning'"
                   size="18"
                   shape="unlink"
                   class="color-orange"
@@ -39,12 +29,12 @@
               </div>
               <div class="infoArea">
                 <label class="eventName" (click)="toggleTitle(spanErrorInfo)">{{
-                  list.name
+                  list.message
                 }}</label>
-                <span class="eventTarget">{{ list.data.name }}</span
+                <span class="eventTarget">{{ list.state }}</span
                 ><span class="eventTime">{{ list.timeDiff }}</span>
                 <span #spanErrorInfo class="eventErrorInf hidden-info">{{
-                  list.data.errorInf
+                  list.message
                 }}</span>
               </div>
             </div>

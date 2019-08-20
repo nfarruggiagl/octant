@@ -36,6 +36,6 @@ func (s *status) tabs(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := json.NewEncoder(w).Encode(nr); err != nil {
-		s.logger.Errorf("encoding namespaces: %v", err)
+		s.logger.Errorf("encoding tabs: %v", err)
 	}
 }

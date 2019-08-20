@@ -34,8 +34,8 @@ func (g *StatusGenerator) Event(ctx context.Context) (octant.Event, error) {
 	nr := &statusResponse{
 		Message:   fmt.Sprintf("Test message: %s", time.Now()),
 		State:     "error",
-		Timestamp: time.Now().Unix(),
-		TimeDiff:  "less than 1 minute",
+		Timestamp: time.Now().UnixNano(),
+		TimeDiff:  "less 1 minute",
 	}
 	data, err := json.Marshal(nr)
 	if err != nil {
@@ -43,14 +43,14 @@ func (g *StatusGenerator) Event(ctx context.Context) (octant.Event, error) {
 	}
 
 	return octant.Event{
-		Type: octant.EventTypeNamespaces,
+		Type: octant.EventTypeStatus,
 		Data: data,
 	}, nil
 }
 
 // ScheduleDelay returns how long to delay before running this generator again.
 func (StatusGenerator) ScheduleDelay() time.Duration {
-	return DefaultScheduleDelay
+	return 30 * time.Second
 }
 
 // Name returns the generator's name.
