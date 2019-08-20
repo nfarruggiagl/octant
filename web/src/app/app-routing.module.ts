@@ -11,7 +11,6 @@ import { OverviewComponent } from './modules/overview/overview.component';
 export const appRoutes: Routes = [{ path: '**', component: OverviewComponent }];
 
 @NgModule({
-  declarations: [],
   imports: [
     RouterModule.forRoot(appRoutes, {
       useHash: true,

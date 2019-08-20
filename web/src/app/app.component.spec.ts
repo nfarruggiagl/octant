@@ -16,10 +16,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { ContextSelectorComponent } from './modules/overview/components/context-selector/context-selector.component';
 import { DefaultPipe } from './modules/overview/pipes/default.pipe';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {
-  BackendService,
-  WebsocketService,
-} from './modules/overview/services/websocket/websocket.service';
+import { WebsocketService } from './modules/overview/services/websocket/websocket.service';
 import { WebsocketServiceMock } from './modules/overview/services/websocket/mock';
 import { ClarityIcons } from '@clr/icons';
 
@@ -45,7 +42,7 @@ describe('AppComponent', () => {
         NotifierComponent,
         NavigationComponent,
         ContextSelectorComponent,
-        DefaultPipe,
+        DefaultPipe
       ],
     }).compileComponents();
   }));

@@ -19,6 +19,7 @@ import { WebsocketService } from './services/websocket/websocket.service';
 import { KubeContextService } from './services/kube-context/kube-context.service';
 import { take } from 'rxjs/operators';
 import _ from 'lodash';
+import { StatusService } from 'src/app/components/status/status.service';
 
 const emptyContentResponse: ContentResponse = {
   content: {
@@ -60,7 +61,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
     private viewService: ViewService,
     private contentService: ContentService,
     private websocketService: WebsocketService,
-    private kubeContextService: KubeContextService
+    private kubeContextService: KubeContextService,
+    private statusService: StatusService
   ) {
     this.contentService.current.subscribe(contentResponse => {
       this.setContent(contentResponse);
