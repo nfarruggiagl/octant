@@ -32,6 +32,9 @@ export class StatusComponent {
       handler: this.handleEvent,
     };
 
+    // TODO: There needs to be a factory that sets up the streamers
+    // for each of the different status types, as of right now, there is only "error"
+    // so this is fine.
     this.statusService.getTabs().subscribe((data: Tab[]) => {
       this.tabs = data;
       this.tabs.forEach(tab => {
