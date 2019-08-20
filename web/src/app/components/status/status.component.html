@@ -12,7 +12,7 @@
             {{ tab.displayName }}
           </button>
           <clr-tab-content id="{{ tab.streamName }}-{{ tab.displayName }}" *clrIfActive>
-            <div class="eventInfo" *ngFor="let list of resultLists">
+            <div class="eventInfo" *ngFor="let list of messageList">
               <div class="iconsArea">
                 <i
                   class="spinner spinner-inline spinner-pos"
