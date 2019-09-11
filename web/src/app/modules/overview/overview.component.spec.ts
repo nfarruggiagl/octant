@@ -12,6 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ContentResponse } from '../../models/content';
 import { ContentService } from './services/content/content.service';
 import { IconService } from './services/icon.service';
+import { StatusService } from 'src/app/components/status';
 
 class ContentServiceMock {
   current = new BehaviorSubject<ContentResponse>({
@@ -35,6 +36,7 @@ describe('OverviewComponent', () => {
         { provide: ActivatedRoute, useValue: new ActivatedRouteStub({}) },
         { provide: Router, useValue: routerSpy },
         { provide: ContentService, useClass: ContentServiceMock },
+        { provide: StatusService },
         IconService,
       ],
     }).compileComponents();

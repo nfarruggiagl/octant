@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
-import { StatusService } from './status.service';
 import { BehaviorSubject } from 'rxjs';
 import { SlideInOutAnimation } from '../_animations/slide-in-out.animation';
-import {
-  ContentStreamService,
-  Streamer,
-} from 'src/app/services/content-stream/content-stream.service';
 import { Tab, Message } from '../../models/status';
 
 const emptyMessages = { message: '', state: '', timeDiff: '', timeStamp: 0 };
@@ -23,26 +18,6 @@ export class StatusComponent {
   animationState = 'out';
   activeMessage: Message | undefined;
   activeMessageId: string | undefined;
-
-  constructor(
-    private statusService: StatusService,
-    private contentStreamService: ContentStreamService
-  ) {
-    const streamer: Streamer = {
-      behavior: this.behavior,
-      handler: this.handleEvent,
-    };
-
-    // TODO: There needs to be a factory that sets up the streamers
-    // for each of the different status types, as of right now, there is only "error"
-    // so this is fine.
-    this.statusService.getTabs().subscribe((data: Tab[]) => {
-      this.tabs = data;
-      this.tabs.forEach(tab => {
-        this.contentStreamService.registerStreamer(tab.streamName, streamer);
-      });
-    });
-  }
 
   private handleEvent = (message: MessageEvent) => {
     const data = JSON.parse(message.data);

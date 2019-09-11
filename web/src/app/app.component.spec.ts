@@ -16,9 +16,15 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { ContextSelectorComponent } from './modules/overview/components/context-selector/context-selector.component';
 import { DefaultPipe } from './modules/overview/pipes/default.pipe';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { WebsocketService } from './modules/overview/services/websocket/websocket.service';
+import {
+  BackendService,
+  WebsocketService,
+} from './modules/overview/services/websocket/websocket.service';
 import { WebsocketServiceMock } from './modules/overview/services/websocket/mock';
 import { ClarityIcons } from '@clr/icons';
+import { StatusComponent } from './components/status';
+import { MessageDetailsComponent } from './components/status/message-details/message-details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -33,6 +39,7 @@ describe('AppComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         NgSelectModule,
+        BrowserAnimationsModule
       ],
       declarations: [
         AppComponent,
@@ -42,7 +49,9 @@ describe('AppComponent', () => {
         NotifierComponent,
         NavigationComponent,
         ContextSelectorComponent,
-        DefaultPipe
+        DefaultPipe,
+        StatusComponent,
+        MessageDetailsComponent
       ],
     }).compileComponents();
   }));
