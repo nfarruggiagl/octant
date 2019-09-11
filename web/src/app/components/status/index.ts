@@ -8,4 +8,4 @@ import { StatusComponent } from './status.component';
 export * from './status.component';
 export * from '../../models/status';
 export * from './status.service';
-export const STATUS_DIRECTIVES: Type<any>[] = [StatusComponent];
+export const STATUS_DIRECTIVES: Type<StatusComponent>[] = [StatusComponent];

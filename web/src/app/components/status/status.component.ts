@@ -13,15 +13,16 @@ const emptyMessages = { message: '', state: '', timeDiff: '', timeStamp: 0 };
 @Component({
   selector: 'app-status-model',
   templateUrl: './status.component.html',
-  styleUrls: ['./status.component.css'],
+  styleUrls: ['./status.component.scss'],
   animations: [SlideInOutAnimation],
 })
 export class StatusComponent {
   tabs: Tab[] = [];
   behavior = new BehaviorSubject<Message>(emptyMessages);
   messageList: Message[] = [];
-
   animationState = 'out';
+  activeMessage: Message | undefined;
+  activeMessageId: string | undefined;
 
   constructor(
     private statusService: StatusService,
@@ -49,25 +50,26 @@ export class StatusComponent {
     this.messageList.unshift(data);
   };
 
-  toggleTitle(errorSpan: any) {
+  toggleTitle(errorSpan) {
     errorSpan.style.display =
       errorSpan.style.display === 'block' ? 'none' : 'block';
   }
 
-  slideOut(): void {
+  slide() {
     this.animationState = this.animationState === 'out' ? 'in' : 'out';
+    if (this.animationState === 'out') {
+      this.closeDetails();
+    }
   }
 
-  openSlide(): void {
-    this.animationState = 'in';
+  viewMessageDetails(messageId: string, message: Message) {
+    this.activeMessageId = messageId;
+    this.activeMessage = message;
   }
 
-  TabEvent(): void {
-    let timp: any;
-    this.messageList.forEach(data => {
-      timp = new Date().getTime() - +Math.floor(data.timeStamp / 1000000);
-      data.timeDiff = this.calculateTime(timp);
-    });
+  closeDetails() {
+    this.activeMessage = undefined;
+    this.activeMessageId = undefined;
   }
 
   calculateTime(timp: number) {

@@ -21,6 +21,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { OverviewModule } from './modules/overview/overview.module';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { STATUS_DIRECTIVES, StatusService } from './components/status/index';
+import { MessageDetailsComponent } from './components/status/message-details/message-details.component';
 
 @Injectable()
 export class UnstripTrailingSlashLocation extends Location {
@@ -38,6 +39,7 @@ export class UnstripTrailingSlashLocation extends Location {
     NotifierComponent,
     NavigationComponent,
     STATUS_DIRECTIVES,
+    MessageDetailsComponent
   ],
   imports: [
     BrowserModule,

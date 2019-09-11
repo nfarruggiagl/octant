@@ -1,0 +1,87 @@
+// This value should match the value used for the animations in 'slide-in-out.animations.ts'
+$statusContentWidth: 13.5rem;
+
+.message-details {
+  position: absolute;
+  background-color: white;
+  width: 15rem;
+  height: calc(100% - 6rem);
+  top: 6rem;
+  right: $statusContentWidth;
+  box-shadow: -5px 2px 10px 0 rgba(0, 0, 0, .2);
+  border: 1px solid rgba(0, 0, 0, .12);
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+  border-top: 3px solid transparent;
+  padding: 1rem 0.7rem;
+  overflow-y: auto;
+
+  &.warning {
+    border-top-color: #fbc02d;
+  }
+
+  &.error {
+    border-top-color: #f44336;
+  }
+
+  .close {
+    position: absolute;
+    cursor: pointer;
+    top: .2rem;
+    left: .2rem;
+  }
+
+  .text-section {
+    display: flex;
+
+    .icon {
+      &-error {
+        color: #f44336;
+      }
+  
+      &-warning {
+        color: #fbc02d;
+      }
+  
+      &-success {
+        color: #689f38;
+      }
+    }
+  
+    .info {
+      width: 100%;
+      padding-left: .5rem;
+  
+      .title {
+        font-weight: 500;
+      }
+  
+      .timediff {
+        display: flex;
+        justify-content: space-between;
+        color: #999;
+        font-size: 1em;
+      }
+    }
+  }
+  
+  .actions-section {
+    margin: 1rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .btn {
+      width: auto;
+      max-width: unset;
+      margin: 0;
+
+      &:first-child {
+        margin-right: .3rem;
+      }
+
+      &:last-child {
+        margin-left: .3rem;
+      }
+    }
+  }
+}

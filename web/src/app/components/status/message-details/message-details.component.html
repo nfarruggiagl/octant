@@ -1,0 +1,40 @@
+<div class="message-details" [ngClass]="message.state" *ngIf="message">
+  <clr-icon 
+    class="close"
+    title="Close details"
+    shape="window-close"
+    (click)="onCloseDetails.emit(true)"
+  ></clr-icon>
+
+  <div class="text-section">
+    <div class="icon">
+      <clr-icon
+        [hidden]="message.state !== 'error'"
+        size="18"
+        shape="error-standard"
+        class="icon-error"
+      ></clr-icon>
+      <clr-icon
+        [hidden]="message.state !== 'warning'"
+        size="18"
+        shape="unlink"
+        class="icon-warning"
+      ></clr-icon>
+    </div>
+    <div class="info">
+      <span class="title">{{ message.message }}</span>
+      <div class="timediff">
+        <span>{{ message.timeDiff }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions-section">
+    <button class="btn btn-primary">Lorem</button>
+    <button class="btn btn-outline">Ipsum</button>
+  </div>
+
+  <div class="form-group">
+    <textarea></textarea>
+  </div>
+</div>

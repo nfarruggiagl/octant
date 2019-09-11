@@ -1,46 +1,57 @@
-<div class="operDiv" [@SlideInOutAnimation]="animationState">
-  <a class="toolBar" (click)="slideOut()">
-    <clr-icon shape="angle-double"></clr-icon>
+<div class="status-view" [@SlideInOutAnimation]="animationState">
+  <a class="status-view--trigger" (click)="slide()">
+    <clr-icon shape="angle" [class]="animationState"></clr-icon>
   </a>
-  <div class="side-form">
-    <clr-icon shape="refresh" class="freshIcon" (click)="TabEvent()"></clr-icon>
-    <h3 class="custom-h2 event-text">Octant Status</h3>
-    <div class="tab-top">
-      <clr-tabs>
-        <clr-tab *ngFor="let tab of tabs">
-          <button clrTabLink id="link1" (click)="TabEvent()">
-            {{ tab.displayName }}
-          </button>
-          <clr-tab-content id="{{ tab.streamName }}-{{ tab.displayName }}" *clrIfActive>
-            <div class="eventInfo" *ngFor="let list of messageList">
-              <div class="iconsArea">
+  <div class="status-view--content">
+    <div class="header">
+      <h4>Octant Status</h4>
+      <clr-icon shape="refresh" class="icon-refresh"></clr-icon>
+    </div>
+    <clr-tabs *ngIf="tabs.length > 0">
+      <clr-tab *ngFor="let tab of tabs; let tabIndex = index">
+        <button clrTabLink>
+          {{ tab.displayName }}
+        </button>
+        <ng-template [clrIfActive]="tabIndex === 0">
+          <clr-tab-content>
+            <div
+              [id]="'event' + messageIndex"
+              class="message"
+              [class.inactive]="activeMessageId !== ('event' + messageIndex)"
+              *ngFor="let message of messageList; let messageIndex = index"
+              (click)="viewMessageDetails('event' + messageIndex, message)"
+            >
+              <div class="message-icon">
                 <clr-icon
-                  [hidden]="list.state != 'error'"
+                  [hidden]="message.state !== 'error'"
                   size="18"
                   shape="error-standard"
-                  class="color-red"
+                  class="icon-error"
                 ></clr-icon>
                 <clr-icon
-                  [hidden]="list.state != 'warning'"
+                  [hidden]="message.state !== 'warning'"
                   size="18"
                   shape="unlink"
-                  class="color-orange"
+                  class="icon-warning"
                 ></clr-icon>
               </div>
-              <div class="infoArea">
-                <label class="eventName" (click)="toggleTitle(spanErrorInfo)">{{
-                  list.message
-                }}</label>
-                <span class="eventTarget">{{ list.state }}</span
-                ><span class="eventTime">{{ list.timeDiff }}</span>
-                <span #spanErrorInfo class="eventErrorInf hidden-info">{{
-                  list.message
-                }}</span>
+              <div class="message-info">
+                <span class="title">{{ message.message }}</span>
+                <div class="description">
+                  <span>{{ message.state }}</span>
+                  <span>{{ message.timeDiff }}</span>
+                </div>
               </div>
             </div>
           </clr-tab-content>
-        </clr-tab>
-      </clr-tabs>
-    </div>
+        </ng-template>
+      </clr-tab>
+    </clr-tabs>
+
+    <app-message-details
+      *ngIf="activeMessage"
+      [message]="activeMessage"
+      (onCloseDetails)="closeDetails()"
+    ></app-message-details>
   </div>
 </div>
