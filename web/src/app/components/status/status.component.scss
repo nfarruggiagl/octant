@@ -1,25 +1,23 @@
 // This value should match the value used for the animations in 'slide-in-out.animations.ts'
-$statusContentWidth: 13.5rem;
-$statusTriggerWidth: 1.2rem;
+$statusContentHeight: 12rem;
+$tabsHeight: 2rem;
 $buttonsColor: #7c7c7c;
 $buttonsColorHover: #0079b8;
 
 .status-view {
   position: fixed;
-  width: $statusContentWidth + $statusTriggerWidth;
-  height: 100vh;
-  top: 0;
+  width: 100vw;
+  height: $statusContentHeight;
+  left: 0;
   z-index: 501;
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 
   &--trigger {
-    width: $statusTriggerWidth;
-    height: 3rem;
-    margin-top: 2.5rem;
-    background-color: white;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, .5);
-    border-bottom-left-radius: 3px;
-    border-top-left-radius: 3px;
+    position: absolute;
+    height: 36px;
+    right: 2em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -27,95 +25,35 @@ $buttonsColorHover: #0079b8;
     color: $buttonsColor;
 
     &:hover {
-      background-color: #fafafa;
       color: $buttonsColorHover;
     }
 
     clr-icon {
       &.in {
-        transform: rotate(90deg);
-      }
-
-      &.out {
-        transform: rotate(-90deg);
+        transform: rotate(180deg);
       }
     }
   }
 
   &--content {
-    width: $statusContentWidth;
-    height: 100%;
+    height: $statusContentHeight;
+    width: 100%;
     background-color: white;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, .5);
+    overflow: hidden;
 
-    .header {
-      height: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: transparent;
-      padding: .7rem;
-
-      h4 {
-        margin-top: 0;
+    ::ng-deep clr-tabs {
+      .nav {
+        margin-left: .5rem;
       }
 
-      .icon-refresh {
-        color: $buttonsColor;
-        cursor: pointer;
+      .tab-content clr-datagrid {
+        height: 100%;
 
-        &:hover {
-          color: $buttonsColorHover;
+        .datagrid {
+          margin-top: 0;
+          border-top: 0;
         }
-      }
-    }
-
-    ::ng-deep clr-tabs section {
-      height: calc(100% - 90px);
-      overflow-y: auto;
-    }
-
-    .message {
-      display: flex;
-      padding: .7rem;
-      border-bottom: 1px solid rgba(0, 0, 0, .12);
-      cursor: pointer;
-      position: relative;
-
-      &-icon {
-        width: 18px;
-
-        .icon-error {
-          color: #f44336;
-        }
-
-        .icon-warning {
-          color: #fbc02d;
-        }
-
-        .icon-success {
-          color: #689f38;
-        }
-      }
-
-      &-info {
-        width: 100%;
-        padding-left: .5rem;
-
-        .title {
-          font-weight: 500;
-        }
-
-        .description {
-          display: flex;
-          justify-content: space-between;
-          color: #999;
-          font-size: 1em;
-        }
-      }
-
-      &.inactive {
-        background-color: #fafafa;
       }
     }
   }

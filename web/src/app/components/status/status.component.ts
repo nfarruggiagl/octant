@@ -12,12 +12,22 @@ const emptyMessages = { message: '', state: '', timeDiff: '', timeStamp: 0 };
   animations: [SlideInOutAnimation],
 })
 export class StatusComponent {
-  tabs: Tab[] = [];
+  tabs: Tab[] = [{
+    displayName: 'Tab 1',
+    streamName: 'Tab 1'
+  }, {
+    displayName: 'Tab 2',
+    streamName: 'Tab 2'
+  }, {
+    displayName: 'Tab 3',
+    streamName: 'Tab 3'
+  }, {
+    displayName: 'Tab 4',
+    streamName: 'Tab 4'
+  }];
   behavior = new BehaviorSubject<Message>(emptyMessages);
-  messageList: Message[] = [];
+  messageList: any[] = [];
   animationState = 'out';
-  activeMessage: Message | undefined;
-  activeMessageId: string | undefined;
 
   private handleEvent = (message: MessageEvent) => {
     const data = JSON.parse(message.data);
@@ -32,19 +42,6 @@ export class StatusComponent {
 
   slide() {
     this.animationState = this.animationState === 'out' ? 'in' : 'out';
-    if (this.animationState === 'out') {
-      this.closeDetails();
-    }
-  }
-
-  viewMessageDetails(messageId: string, message: Message) {
-    this.activeMessageId = messageId;
-    this.activeMessage = message;
-  }
-
-  closeDetails() {
-    this.activeMessage = undefined;
-    this.activeMessageId = undefined;
   }
 
   calculateTime(timp: number) {

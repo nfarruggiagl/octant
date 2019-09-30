@@ -23,7 +23,6 @@ import {
 import { WebsocketServiceMock } from './modules/overview/services/websocket/mock';
 import { ClarityIcons } from '@clr/icons';
 import { StatusComponent } from './components/status';
-import { MessageDetailsComponent } from './components/status/message-details/message-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
@@ -50,8 +49,7 @@ describe('AppComponent', () => {
         NavigationComponent,
         ContextSelectorComponent,
         DefaultPipe,
-        StatusComponent,
-        MessageDetailsComponent
+        StatusComponent
       ],
     }).compileComponents();
   }));

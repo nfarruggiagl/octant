@@ -1,25 +1,25 @@
 ﻿import {AnimationTriggerMetadata, trigger, state, animate, transition, style } from '@angular/animations';
 
 // This value should match the value used for the Status View styles in 'status.component.scss'
-const statusViewRightOut = '-13.5rem';
-const statusViewRightIn = 0;
+const statusViewBottomOut = '-10.5rem';
+const statusViewBottomIn = 0;
 
 export const SlideInOutAnimation: AnimationTriggerMetadata =
     trigger('SlideInOutAnimation', [
         state('in', style({
-            right: statusViewRightIn
+            bottom: statusViewBottomIn
         })),
         state('out', style({
-            right: statusViewRightOut
+            bottom: statusViewBottomOut
         })),
         transition('out => in', [
             animate('.5s ease', style({
-                right: statusViewRightIn
+                bottom: statusViewBottomIn
             }))
         ]),
         transition('in => out', [
             animate('.5s ease', style({
-                right: statusViewRightOut
+                bottom: statusViewBottomOut
             }))
         ])
     ]);

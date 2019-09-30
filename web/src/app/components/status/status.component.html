@@ -3,55 +3,37 @@
     <clr-icon shape="angle" [class]="animationState"></clr-icon>
   </a>
   <div class="status-view--content">
-    <div class="header">
-      <h4>Octant Status</h4>
-      <clr-icon shape="refresh" class="icon-refresh"></clr-icon>
-    </div>
     <clr-tabs *ngIf="tabs.length > 0">
-      <clr-tab *ngFor="let tab of tabs; let tabIndex = index">
+      <clr-tab *ngFor="let tab of tabs; let tabIndex = index; trackBy:tabIndex">
         <button clrTabLink>
           {{ tab.displayName }}
         </button>
         <ng-template [clrIfActive]="tabIndex === 0">
           <clr-tab-content>
-            <div
-              [id]="'event' + messageIndex"
-              class="message"
-              [class.inactive]="activeMessageId !== ('event' + messageIndex)"
-              *ngFor="let message of messageList; let messageIndex = index"
-              (click)="viewMessageDetails('event' + messageIndex, message)"
-            >
-              <div class="message-icon">
-                <clr-icon
-                  [hidden]="message.state !== 'error'"
-                  size="18"
-                  shape="error-standard"
-                  class="icon-error"
-                ></clr-icon>
-                <clr-icon
-                  [hidden]="message.state !== 'warning'"
-                  size="18"
-                  shape="unlink"
-                  class="icon-warning"
-                ></clr-icon>
-              </div>
-              <div class="message-info">
-                <span class="title">{{ message.message }}</span>
-                <div class="description">
-                  <span>{{ message.state }}</span>
-                  <span>{{ message.timeDiff }}</span>
-                </div>
-              </div>
-            </div>
+            <clr-datagrid>
+              <clr-dg-column>Summary</clr-dg-column>
+              <clr-dg-column>Traceback</clr-dg-column>
+              <clr-dg-column>Level</clr-dg-column>
+              <clr-dg-column>Timestamp</clr-dg-column>
+              <clr-dg-column>ID</clr-dg-column>
+              <clr-dg-column>Request Info</clr-dg-column>
+              <clr-dg-column>Client Info</clr-dg-column>
+
+              <clr-dg-row *ngFor="let message of messageList; trackBy:message?.id">
+                <clr-dg-cell>{{ message.summary }}</clr-dg-cell>
+                <clr-dg-cell>{{ message.traceback }}</clr-dg-cell>
+                <clr-dg-cell>{{ message.level }}</clr-dg-cell>
+                <clr-dg-cell>{{ message.timestamp }}</clr-dg-cell>
+                <clr-dg-cell>{{ message.id }}</clr-dg-cell>
+                <clr-dg-cell>{{ message.request_info }}</clr-dg-cell>
+                <clr-dg-cell>{{ message.client_info }}</clr-dg-cell>
+              </clr-dg-row>
+          
+              <clr-dg-footer>{{ messageList.length }} messages</clr-dg-footer>
+            </clr-datagrid>
           </clr-tab-content>
         </ng-template>
       </clr-tab>
     </clr-tabs>
-
-    <app-message-details
-      *ngIf="activeMessage"
-      [message]="activeMessage"
-      (onCloseDetails)="closeDetails()"
-    ></app-message-details>
   </div>
 </div>
