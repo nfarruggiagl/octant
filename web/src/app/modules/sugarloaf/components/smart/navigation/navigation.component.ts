@@ -22,6 +22,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   behavior = new BehaviorSubject<Navigation>(emptyNavigation);
   collapsed = false;
   navExpandedState: any;
+  lastSelection: number;
 
   navigation = emptyNavigation;
 
@@ -64,6 +65,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   setNavState($event, state: number) {
     this.navExpandedState[state] = $event;
+    if($event && this.lastSelection != state) { // collapse previously selected group
+      this.navExpandedState[this.lastSelection] = false;
+      this.lastSelection= state;
+    }
     this.navigationService.expandedState.next(this.navExpandedState);
   }
 
