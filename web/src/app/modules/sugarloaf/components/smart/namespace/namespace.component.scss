@@ -3,6 +3,11 @@
  */
 
 .app-namespace-selector {
+  display: flex;
+  flex-flow: row;
+  padding: 8px;
+  margin-left: 32px;
+
   // Dropdown's color variables for Light Theme.
   :host-context(body) {
     --dropdownLink-color: #0079b8;
@@ -23,12 +28,16 @@
 
   .title {
     display: block;
+    padding: 0.4rem;
     margin-bottom: 0.25rem;
     font-weight: 500;
     font-size: 0.9em;
   }
 
   .namespace-dropdown {
+    width: 10rem;
+    margin-left: 0.25rem;
+
     ::ng-deep {
       .ng-select-container {
         border-color: var(--dropdownLink-color);

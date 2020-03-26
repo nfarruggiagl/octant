@@ -1,4 +1,6 @@
 .switch-button-container {
+  padding: 0 0.5rem 0 0.5rem;
+
   :host-context(body) {
     --font-color: #0079b8;
   }
@@ -6,7 +8,15 @@
   :host-context(body.dark) {
     --font-color: #49afd9;
   }
-  
+
+  .btn-collapsed {
+    padding-left: 4px;
+    padding-right: 4px;
+    min-width: 36px;
+    height: 36px;
+    margin-left: -4px;
+  }
+
   button.btn.btn-link.btn-inverse {
     color: var(--font-color);
 

@@ -7,6 +7,7 @@ import { Navigation, NavigationChild } from '../../../models/navigation';
 import { IconService } from '../../../../shared/services/icon/icon.service';
 import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { take } from 'rxjs/operators';
 
 const emptyNavigation: Navigation = {
   sections: [],
@@ -38,6 +39,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.navigationService.expandedState
       .pipe(untilDestroyed(this))
       .subscribe(expanded => (this.navExpandedState = expanded));
+    this.navigationService.collapsed
+      .pipe(untilDestroyed(this))
+      .pipe(take(1))
+      .subscribe(collapsed => (this.collapsed = collapsed));
   }
 
   ngOnDestroy() {}
@@ -50,11 +55,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
     return this.iconService.load(item);
   }
 
-  private handleEvent = (message: MessageEvent) => {
-    const data = JSON.parse(message.data);
-    this.behavior.next(data);
-  };
-
   formatPath(path: string): string {
     if (!path.startsWith('/')) {
       return '/' + path;
@@ -63,11 +63,20 @@ export class NavigationComponent implements OnInit, OnDestroy {
     return path;
   }
 
+  openPopup(index: number) {
+    this.navExpandedState = {};
+    this.setNavState(true, index);
+  }
+
   setNavState($event, state: number) {
     this.navExpandedState[state] = $event;
-    if($event && this.lastSelection != state) { // collapse previously selected group
-      this.navExpandedState[this.lastSelection] = false;
-      this.lastSelection= state;
+    if ($event && this.lastSelection !== state) {
+      // collapse previously selected group
+      if (this.lastSelection) {
+        this.navExpandedState[this.lastSelection] = false;
+        this.navigationService.expandedState.next(this.navExpandedState);
+      }
+      this.lastSelection = state;
     }
     this.navigationService.expandedState.next(this.navExpandedState);
   }
@@ -77,5 +86,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
       return this.navExpandedState[index];
     }
     return false;
+  }
+
+  updateNavCollapsed(value: boolean): void {
+    this.collapsed = value;
+    this.navigationService.collapsed.next(value);
+    this.navExpandedState[this.lastSelection] = false;
+    this.navigationService.expandedState.next(this.navExpandedState);
   }
 }

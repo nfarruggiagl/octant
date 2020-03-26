@@ -6,6 +6,8 @@
   height: 100%;
   background: none;
   width: 300px;
+  transition: none;
+  will-change: none;
 
   .title {
     display: block;
@@ -19,6 +21,14 @@
     border-top: 1px;
   }
 
+  .nav-icon {
+    margin-top: 4px;
+  }
+
+  .nav-link {
+    height: 1.5rem;
+  }
+
   .namespace-switcher {
     padding: 0 1rem 1rem 1rem;
   }
@@ -28,7 +38,34 @@
     overflow-y: auto;
   }
 
-  .theme-switcher {
-    padding: 0 1rem 0 0.5rem;
+  .flyout-item {
+    padding: 0px 8px!important;
+  }
+
+  .flyout {
+    display: flex;
+    border: 1px solid var(--clr-popover-box-shadow-color);
+    flex-direction: column;
+    z-index: 502;
+    position: fixed;
+    margin-top: -30px;
+    margin-left: 48px;
+    background-color: var(--clr-global-app-background, #1b2a32);
+    color: var(--clr-global-font-color);
+  }
+
+  .tooltip-override {
+    position: static;
+    display:block;
+  }
+
+  .tooltip-content-override {
+    z-index: 503;
+    position: fixed;
+    bottom: unset;
+    left: unset;
+    margin: unset;
+    margin-top: -76px;
+    margin-left: 42px;
   }
 }

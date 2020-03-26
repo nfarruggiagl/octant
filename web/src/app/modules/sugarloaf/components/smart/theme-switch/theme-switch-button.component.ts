@@ -1,10 +1,9 @@
 // Copyright (c) 2019 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 //
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import {
   darkTheme,
-  defaultTheme,
   lightTheme,
   Theme,
   ThemeService,
@@ -19,6 +18,7 @@ import {
 })
 export class ThemeSwitchButtonComponent implements OnInit {
   themeType: ThemeType;
+  @Input() public collapsed: boolean;
 
   constructor(
     private themeService: ThemeService,
