@@ -9,18 +9,14 @@
             </ng-template>
 
             <ng-container *ngIf="section.children?.length > 0; else noChildCollapsed">
-                <span class="tooltip-override tooltip tooltip-md">
-                  <a clrVerticalNavLink (click)="openPopup(i)">
-                    <clr-icon [attr.shape]="section.iconName | default:'home'" clrVerticalNavIcon></clr-icon>
-                  </a>
-                  <span class="tooltip-content-override tooltip-content">
-                    <span>{{ section.title }}</span>
-                  </span>
-                </span>
+              <a clrVerticalNavLink (click)="openPopup(i)">
+                <clr-icon [attr.shape]="section.iconName | default:'home'" clrVerticalNavIcon></clr-icon>
+              </a>
 
               <ng-container *ngIf="shouldExpand(i)">
                 <div class="flyout nav-group-children">
-                  <clr-vertical-nav-group-children>
+                  <span class="flyout-header">{{ section.title }}</span>
+                  <clr-vertical-nav-group-children class="flyout-group">
                   <a
                     *ngFor="let category of section.children; trackBy: identifyNavigationItem"
                     [routerLink]="formatPath(category.path)"
@@ -42,6 +38,7 @@
                     [routerLinkActiveOptions]="{exact: true}"
                     [routerLink]="formatPath(section.path)"
                     routerLinkActive="active"
+                    (click)="closePopups()"
                 >
                     <clr-icon [attr.shape]="section.iconName | default:'home'" clrVerticalNavIcon></clr-icon>
                 </a>

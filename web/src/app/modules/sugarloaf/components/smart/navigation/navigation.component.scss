@@ -2,6 +2,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+:host-context(body) {
+  --header-color: #0079b8;
+}
+
+:host-context(body.dark) {
+  --header-color: #49afd9;
+}
+
 .clr-vertical-nav {
   height: 100%;
   background: none;
@@ -38,8 +46,19 @@
     overflow-y: auto;
   }
 
-  .flyout-item {
+  .flyout-header {
     padding: 0px 8px!important;
+    color: var(--header-color);
+  }
+
+  .flyout-item {
+    padding-left: 24px!important;
+    padding-right: 8px!important;
+  }
+
+  .flyout-group {
+    display: flex;
+    flex-direction: column;
   }
 
   .flyout {
@@ -48,10 +67,11 @@
     flex-direction: column;
     z-index: 502;
     position: fixed;
-    margin-top: -30px;
+    margin-top: -36px;
     margin-left: 48px;
     background-color: var(--clr-global-app-background, #1b2a32);
     color: var(--clr-global-font-color);
+    padding: 8px 0px;
   }
 
   .tooltip-override {

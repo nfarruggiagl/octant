@@ -68,6 +68,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
     this.setNavState(true, index);
   }
 
+  closePopups() {
+    this.navExpandedState = {};
+  }
+
   setNavState($event, state: number) {
     this.navExpandedState[state] = $event;
     if ($event && this.lastSelection !== state) {
