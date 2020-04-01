@@ -35,6 +35,11 @@ export class NamespaceComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
+  namespaceClass(namespace: string) {
+    const active = this.currentNamespace === namespace ? ['active'] : [];
+    return ['context-button', ...active];
+  }
+
   selectNamespace(namespace: string) {
     this.namespaceService.setNamespace(namespace);
   }

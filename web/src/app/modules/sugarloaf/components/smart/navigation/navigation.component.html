@@ -9,7 +9,10 @@
             </ng-template>
 
             <ng-container *ngIf="section.children?.length > 0; else noChildCollapsed">
-              <a clrVerticalNavLink (click)="openPopup(i)">
+              <a clrVerticalNavLink
+                 (click)="openPopup(i)"
+                 [ngClass]= "{'item-selected' : i == this.lastSelection}"
+                 (mouseover)="flyoutIndex= i; lastSelection=i">
                 <clr-icon [attr.shape]="section.iconName | default:'home'" clrVerticalNavIcon></clr-icon>
               </a>
 
@@ -35,10 +38,12 @@
             <ng-template #noChildCollapsed>
               <span class="tooltip-override tooltip tooltip-md">
                 <a clrVerticalNavLink
+                    [ngClass]= "{'item-selected' : i == this.lastSelection}"
                     [routerLinkActiveOptions]="{exact: true}"
                     [routerLink]="formatPath(section.path)"
                     routerLinkActive="active"
-                    (click)="closePopups()"
+                    (mouseover)="flyoutIndex= -1"
+                    (click)="closePopups(i)"
                 >
                     <clr-icon [attr.shape]="section.iconName | default:'home'" clrVerticalNavIcon></clr-icon>
                 </a>
@@ -79,12 +84,15 @@
             </ng-container>
             <ng-template #noChildExpanded>
               <a clrVerticalNavLink
+                 (click)="closePopups(i)"
                  [routerLinkActiveOptions]="{exact: true}"
                  [routerLink]="formatPath(section.path)"
                  routerLinkActive="active"
               >
                 <clr-icon [attr.shape]="section.iconName | default:'home'" clrVerticalNavIcon></clr-icon>
-              {{ section.title }}
+                  <div class="nav-item-text">
+                    {{ section.title }}
+                  </div>
               </a>
             </ng-template>
           </ng-template>

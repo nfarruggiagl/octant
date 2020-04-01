@@ -20,10 +20,10 @@ const emptyNavigation: Navigation = {
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit, OnDestroy {
-  behavior = new BehaviorSubject<Navigation>(emptyNavigation);
   collapsed = false;
   navExpandedState: any;
   lastSelection: number;
+  flyoutIndex = -1;
 
   navigation = emptyNavigation;
 
@@ -43,6 +43,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
       .pipe(untilDestroyed(this))
       .pipe(take(1))
       .subscribe(collapsed => (this.collapsed = collapsed));
+    this.navigationService.lastSelection
+      .pipe(untilDestroyed(this))
+      .subscribe(selection => (this.lastSelection = selection));
   }
 
   ngOnDestroy() {}
@@ -64,30 +67,52 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   openPopup(index: number) {
-    this.navExpandedState = {};
+    this.clearExpandedState();
     this.setNavState(true, index);
+    this.setLastSelection(index);
   }
 
-  closePopups() {
-    this.navExpandedState = {};
+  closePopups(index) {
+    this.clearExpandedState();
+    this.flyoutIndex = -1;
+    this.setLastSelection(index);
   }
 
-  setNavState($event, state: number) {
-    this.navExpandedState[state] = $event;
-    if ($event && this.lastSelection !== state) {
-      // collapse previously selected group
-      if (this.lastSelection) {
-        this.navExpandedState[this.lastSelection] = false;
-        this.navigationService.expandedState.next(this.navExpandedState);
-      }
-      this.lastSelection = state;
-    }
+  setLastSelection(index) {
+    this.lastSelection = index;
+    this.navigationService.lastSelection.next(index);
+  }
+
+  setExpandedState(index, state) {
+    this.navExpandedState[index] = state;
     this.navigationService.expandedState.next(this.navExpandedState);
   }
 
+  clearExpandedState() {
+    this.navExpandedState= {};
+    this.navigationService.expandedState.next(this.navExpandedState);
+  }
+
+  setNavState($event, state: number) {
+    if(this.collapsed) {
+      this.setLastSelection(state);
+    } else {
+      this.setExpandedState(state, $event);
+      if ($event && this.lastSelection !== state) {
+        // collapse previously selected group
+        if (this.lastSelection) {
+          this.setExpandedState(this.lastSelection, false);
+        }
+        this.setLastSelection(state);
+      }
+    }
+  }
+
   shouldExpand(index: number) {
-    if (index.toString() in this.navExpandedState) {
-      return this.navExpandedState[index];
+    if(this.collapsed) {
+      return (index == this.flyoutIndex)
+    } else if (index.toString() in this.navExpandedState) {
+        return this.navExpandedState[index];
     }
     return false;
   }
@@ -95,7 +120,6 @@ export class NavigationComponent implements OnInit, OnDestroy {
   updateNavCollapsed(value: boolean): void {
     this.collapsed = value;
     this.navigationService.collapsed.next(value);
-    this.navExpandedState[this.lastSelection] = false;
-    this.navigationService.expandedState.next(this.navExpandedState);
+    this.setExpandedState(this.lastSelection, false);
   }
 }

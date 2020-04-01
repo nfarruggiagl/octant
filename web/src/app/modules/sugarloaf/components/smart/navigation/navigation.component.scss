@@ -3,11 +3,13 @@
  */
 
 :host-context(body) {
-  --header-color: #0079b8;
+  --selection-color: var(--clr-color-neutral-400);
+  --tooltip-text-color: black;
 }
 
 :host-context(body.dark) {
-  --header-color: #49afd9;
+  --selection-color: #324f62;
+  --tooltip-text-color: #EAEDEF;
 }
 
 .clr-vertical-nav {
@@ -30,15 +32,31 @@
   }
 
   .nav-icon {
-    margin-top: 4px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 0.8rem;
+  }
+
+  .nav-item-text {
+    line-height: 1.5rem;
   }
 
   .nav-link {
     height: 1.5rem;
+    padding-left: 0;
+  }
+
+  .nav-group:not(.is-expanded) {
+    height: 1.5rem;
+    min-height: 1.5rem;
   }
 
   .namespace-switcher {
     padding: 0 1rem 1rem 1rem;
+  }
+
+  .item-selected {
+    background-color: var(--selection-color);
   }
 
   .navigation-items {
@@ -47,8 +65,15 @@
   }
 
   .flyout-header {
-    padding: 0px 8px!important;
-    color: var(--header-color);
+    font-weight: 700;
+    background-color: var(--selection-color);
+    border-radius: 0px 3px 0px 0px;
+    padding: 3px 8px!important;
+    margin-left: -1px;
+  }
+
+  .nav-divider {
+    border-color: #575757; opacity: 0.2;
   }
 
   .flyout-item {
@@ -63,15 +88,17 @@
 
   .flyout {
     display: flex;
-    border: 1px solid var(--clr-popover-box-shadow-color);
+    border: 1px solid var(--navigation-border-color);
+    border-left-width: 0px;
+    border-radius: 0px 4px 4px 0px;
     flex-direction: column;
     z-index: 502;
     position: fixed;
-    margin-top: -36px;
+    margin-top: -31px;
     margin-left: 48px;
     background-color: var(--clr-global-app-background, #1b2a32);
     color: var(--clr-global-font-color);
-    padding: 8px 0px;
+    padding: 0px 0px 0px 0px;
   }
 
   .tooltip-override {
@@ -79,13 +106,24 @@
     display:block;
   }
 
+  .tooltip-content-override:before {
+    border-left-color: var(--selection-color);
+    border-top-color: var(--selection-color);
+  }
+
   .tooltip-content-override {
+    color: var(--tooltip-text-color);
+    background-color: var(--selection-color);
     z-index: 503;
     position: fixed;
     bottom: unset;
     left: unset;
     margin: unset;
-    margin-top: -76px;
-    margin-left: 42px;
+    margin-top: -72px;
+    margin-left: 52px;
+    width: auto;
+    height: auto;
+    opacity: 0.8;
+    padding: 6px 9px;
   }
 }
