@@ -19,7 +19,9 @@ const emptyNavigation: Navigation = {
 })
 export class NavigationService {
   current = new BehaviorSubject<Navigation>(emptyNavigation);
-  public lastSelection: BehaviorSubject<number> = new BehaviorSubject<number>(-1);
+  public lastSelection: BehaviorSubject<number> = new BehaviorSubject<number>(
+    -1
+  );
   public expandedState: BehaviorSubject<any> = new BehaviorSubject<any>({});
   public collapsed: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false

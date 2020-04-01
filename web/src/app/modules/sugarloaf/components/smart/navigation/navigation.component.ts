@@ -89,12 +89,12 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   clearExpandedState() {
-    this.navExpandedState= {};
+    this.navExpandedState = {};
     this.navigationService.expandedState.next(this.navExpandedState);
   }
 
   setNavState($event, state: number) {
-    if(this.collapsed) {
+    if (this.collapsed) {
       this.setLastSelection(state);
     } else {
       this.setExpandedState(state, $event);
@@ -109,10 +109,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   shouldExpand(index: number) {
-    if(this.collapsed) {
-      return (index == this.flyoutIndex)
+    if (this.collapsed) {
+      return index === this.flyoutIndex;
     } else if (index.toString() in this.navExpandedState) {
-        return this.navExpandedState[index];
+      return this.navExpandedState[index];
     }
     return false;
   }

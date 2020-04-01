@@ -6,6 +6,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { NamespaceService } from 'src/app/modules/shared/services/namespace/namespace.service';
 import trackByIdentity from 'src/app/util/trackBy/trackByIdentity';
+import { NavigationService } from '../../../../shared/services/navigation/navigation.service';
 
 @Component({
   selector: 'app-namespace',
@@ -16,8 +17,16 @@ export class NamespaceComponent implements OnInit, OnDestroy {
   namespaces: string[];
   currentNamespace = '';
   trackByIdentity = trackByIdentity;
+  navigation = {
+    sections: [],
+    defaultPath: '',
+  };
+  lastSelection: number;
 
-  constructor(private namespaceService: NamespaceService) {}
+  constructor(
+    private namespaceService: NamespaceService,
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit() {
     this.namespaceService.activeNamespace
@@ -31,6 +40,14 @@ export class NamespaceComponent implements OnInit, OnDestroy {
       .subscribe((namespaces: string[]) => {
         this.namespaces = namespaces;
       });
+
+    this.navigationService.current
+      .pipe(untilDestroyed(this))
+      .subscribe(navigation => (this.navigation = navigation));
+
+    this.navigationService.lastSelection
+      .pipe(untilDestroyed(this))
+      .subscribe(selection => (this.lastSelection = selection));
   }
 
   ngOnDestroy() {}
@@ -42,5 +59,14 @@ export class NamespaceComponent implements OnInit, OnDestroy {
 
   selectNamespace(namespace: string) {
     this.namespaceService.setNamespace(namespace);
+  }
+
+  showDropdown() {
+    if (this.lastSelection && this.navigation.sections[this.lastSelection]) {
+      return !this.navigation.sections[this.lastSelection].path.includes(
+        'cluster-overview'
+      );
+    }
+    return true;
   }
 }
