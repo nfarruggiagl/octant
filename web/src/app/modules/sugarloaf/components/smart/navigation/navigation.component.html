@@ -1,6 +1,6 @@
 <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="collapsed" (clrVerticalNavCollapsedChange)="updateNavCollapsed($event)">
     <!-- Navigation items -->
-    <div class="navigation-items">
+    <div [ngClass]= "{'navigation-items-collapsed' : collapsed, 'navigation-items' : !collapsed}">
         <ng-container *ngFor="let section of navigation.sections; let i = index; trackBy: identifyNavigationItem">
           <!-- Collapsed Navigation -->
           <ng-container *ngIf="collapsed; else expanded">
@@ -42,7 +42,7 @@
                     [routerLinkActiveOptions]="{exact: true}"
                     [routerLink]="formatPath(section.path)"
                     routerLinkActive="active"
-                    (mouseover)="flyoutIndex= -1"
+                    (mouseover)="flyoutIndex= -1; lastSelection= i"
                     (click)="closePopups(i)"
                 >
                     <clr-icon [attr.shape]="section.iconName | default:'home'" clrVerticalNavIcon></clr-icon>

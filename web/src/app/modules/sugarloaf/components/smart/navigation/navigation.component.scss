@@ -27,6 +27,10 @@
     padding: 0 1rem 0 1rem;
   }
 
+  .nav-btn {
+    display: none;
+  }
+
   .nav-divider {
     border-top: 1px;
   }
@@ -64,6 +68,11 @@
     overflow-y: auto;
   }
 
+  .navigation-items-collapsed {
+    flex-grow: 1;
+    overflow-y: hidden;
+  }
+
   .flyout-header {
     font-weight: 700;
     background-color: var(--selection-color);
@@ -79,6 +88,7 @@
   .flyout-item {
     padding-left: 24px!important;
     padding-right: 8px!important;
+    line-height: 1.5rem;
   }
 
   .flyout-group {
@@ -123,7 +133,6 @@
     margin-left: 52px;
     width: auto;
     height: auto;
-    opacity: 0.8;
     padding: 6px 9px;
   }
 }
